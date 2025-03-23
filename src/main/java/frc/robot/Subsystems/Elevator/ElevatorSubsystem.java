@@ -16,10 +16,10 @@ public class ElevatorSubsystem extends SubsystemBase {
   private VictorSPX _motor1 = new VictorSPX(Constants.ElevatorConstants.kElevatorMotorPort);
   private Encoder encoder = new Encoder(Constants.ElevatorConstants.kENC_A, Constants.ElevatorConstants.kENC_B);
 
-  private double kDt = 0.02, ks = 0.00001, kg = 0.09, kv = 0.000045, ka = 0.0000001;
+  private double kDt = 0.02, ks = 0.00001, kg = 0.09, kv = 0.00003, ka = 0.0000001;
   private String state = "null";
 
-  TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(16000, 19000));
+  TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(15000, 14000));
   TrapezoidProfile.State _setpoint = new TrapezoidProfile.State();
   TrapezoidProfile.State _goal = new TrapezoidProfile.State();
 
@@ -45,13 +45,13 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    double feedforwardOutput = feedforward.calculate(_setpoint.velocity);
     _setpoint = profile.calculate(
       kDt, 
       _setpoint, 
       _goal
     );
-    double feedforwardOutput = feedforward.calculate(_setpoint.velocity);
-
+    
     _motor1.set(ControlMode.PercentOutput, feedforwardOutput);
 
     if (encoder.get() >= 13500) {
