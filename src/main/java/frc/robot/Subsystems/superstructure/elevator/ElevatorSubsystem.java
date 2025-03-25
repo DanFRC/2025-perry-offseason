@@ -1,6 +1,6 @@
-package frc.robot.Subsystems.Elevator;
+//
 
-import frc.robot.Constants;
+package frc.robot.Subsystems.superstructure.elevator;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -13,12 +13,19 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
   // Hardware
-  private VictorSPX _motor1 = new VictorSPX(Constants.ElevatorConstants.kElevatorMotorPort);
-  private Encoder encoder = new Encoder(Constants.ElevatorConstants.kENC_A, Constants.ElevatorConstants.kENC_B);
+  private VictorSPX _motor1 = new VictorSPX(ElevatorConstants.kElevatorMotorPort);
+  private Encoder encoder = new Encoder(ElevatorConstants.kENC_A, ElevatorConstants.kENC_B);
 
-  private double kDt = 0.02, ks = 0.00001, kg = 0.09, kv = 0.00003, ka = 0.0000001;
+  // Vars
+  private double kDt = ElevatorConstants.kDt, ks = ElevatorConstants.ks, kg = ElevatorConstants.kg, kv = ElevatorConstants.kv, ka = ElevatorConstants.ka;
   private String state = "null";
 
+  // Vars: Threasholds
+  private double kL4Threash = ElevatorConstants.kL4 - 2000;
+  private double kL3Threash = ElevatorConstants.kL3 - 2000;
+  private double kL2Threash = ElevatorConstants.kL2 - 2000;
+
+  // Control Systems
   TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(15000, 14000));
   TrapezoidProfile.State _setpoint = new TrapezoidProfile.State();
   TrapezoidProfile.State _goal = new TrapezoidProfile.State();
@@ -30,6 +37,7 @@ public class ElevatorSubsystem extends SubsystemBase {
     ka
   );
 
+  // Funcs
   public void setSetpoint(double returnedPoint) {
     _goal = new TrapezoidProfile.State(returnedPoint, 0);
   }
@@ -54,13 +62,13 @@ public class ElevatorSubsystem extends SubsystemBase {
     
     _motor1.set(ControlMode.PercentOutput, feedforwardOutput);
 
-    if (encoder.get() >= 13500) {
+    if (encoder.get() >= kL4Threash) {
       state = "l4";
-    } else if (encoder.get() < 13500 && encoder.get() >= 7000) {
+    } else if (encoder.get() < kL4Threash && encoder.get() >= kL3Threash) {
       state = "l3";
-    } else if (encoder.get() < 7000 && encoder.get() >= 1000) {
+    } else if (encoder.get() < kL3Threash && encoder.get() >= kL2Threash) {
       state = "l2";
-    } else if (encoder.get() < 1000) {
+    } else if (encoder.get() < kL2Threash) {
       state = "whysolow";
     }
 

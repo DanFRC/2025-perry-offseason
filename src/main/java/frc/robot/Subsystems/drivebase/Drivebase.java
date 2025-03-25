@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.Drivebase;
+package frc.robot.Subsystems.drivebase;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -9,9 +9,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DrivebaseContants;
 
-public class DrivebaseSubsystem extends SubsystemBase {
+public class Drivebase extends SubsystemBase {
 
     private Rotation2d rotation = new Rotation2d();
     private String side = "left";
@@ -20,10 +19,10 @@ public class DrivebaseSubsystem extends SubsystemBase {
     private final MecanumDrive _robotDrive;
 
   // Hardware
-    VictorSPX frontLeft = new VictorSPX(DrivebaseContants.kLeftMotorPort1);
-    VictorSPX rearLeft = new VictorSPX(DrivebaseContants.kLeftMotorPort2);
-    VictorSPX frontRight = new VictorSPX(DrivebaseContants.kRightMotorPort1);
-    VictorSPX rearRight = new VictorSPX(DrivebaseContants.kRightMotorPort2);
+    VictorSPX frontLeft = new VictorSPX(DrivebaseConstants.kLeftMotorPort1);
+    VictorSPX rearLeft = new VictorSPX(DrivebaseConstants.kLeftMotorPort2);
+    VictorSPX frontRight = new VictorSPX(DrivebaseConstants.kRightMotorPort1);
+    VictorSPX rearRight = new VictorSPX(DrivebaseConstants.kRightMotorPort2);
     final AHRS gyro = new AHRS(NavXComType.kUSB1);
 
   public double getGyroYaw() {
@@ -39,7 +38,7 @@ public class DrivebaseSubsystem extends SubsystemBase {
     this.side = givenSide.toLowerCase();
   }
 
-  public DrivebaseSubsystem() {
+  public Drivebase() {
     // Invert the right side motors.
     frontRight.setInverted(true);
     rearRight.setInverted(true);

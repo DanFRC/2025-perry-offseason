@@ -11,9 +11,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Commands.Elevator.a_setElevatorPos;
-//import frc.robot.Subsystems.Drivebase.DrivebaseSubsystem;
-import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.Commands.Elevator.SetElevator;
+import frc.robot.Subsystems.superstructure.elevator.ElevatorSubsystem;
 
 public class RobotContainer {
   public RobotContainer() {
@@ -52,19 +51,19 @@ public class RobotContainer {
 
     // L4
     _operator.y().whileTrue(new SequentialCommandGroup(
-      new a_setElevatorPos(elevatorSubsystem, 4)
+      new SetElevator(elevatorSubsystem, 4)
     ));
     // L3
     _operator.x().whileTrue(new SequentialCommandGroup(
-      new a_setElevatorPos(elevatorSubsystem, 3)
+      new SetElevator(elevatorSubsystem, 3)
     ));
     // L2
     _operator.a().whileTrue(new SequentialCommandGroup(
-    new a_setElevatorPos(elevatorSubsystem, 2)
+    new SetElevator(elevatorSubsystem, 2)
     ));
     // Neutral
     _operator.b().whileTrue(new SequentialCommandGroup(
-      new a_setElevatorPos(elevatorSubsystem, 0)
+      new SetElevator(elevatorSubsystem, 0)
     ));
     // // Barge
     // _operator.povUp().onTrue(new SequentialCommandGroup(

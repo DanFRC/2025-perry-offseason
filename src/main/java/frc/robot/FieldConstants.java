@@ -4,49 +4,9 @@
 
 package frc.robot;
 
-public final class Constants {
+public final class FieldConstants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
-  }
-
-  public static class DrivebaseContants {
-    // Drive Motor Ports for AM14U6? (Might be a different drive base??)
-    public static final int kLeftMotorPort1 = 8;
-    public static final int kLeftMotorPort2 = 7;
-    public static final int kRightMotorPort1 = 6;
-    public static final int kRightMotorPort2 = 5;
-    public static final int kGyroPort = 7;
-
-    public static double turnP = 0.025;
-    public static double turnI = 0.005;
-    public static double turnD = 0.005;
-
-    public static double driveP = 0.025;
-    public static double driveI = 0.005;
-    public static double driveD = 0.005;
-  }
-
-  public static class ElevatorConstants {
-    public static final int kElevatorMotorPort = 4;
-    public static final int kLimitSwitchPort = 0;
-    public static final int kENC_A = 8;
-    public static final int kENC_B = 9;
-
-    public static double kP = 0.0005;
-    public static double kI = 0.0005;
-    public static double kD = 0.0002;
-
-    public static final double kElevatorDeadZoneMax = 16050;
-    public static final double kElevatorDeadZoneMin = 10;
-
-    public static final double kElevatorMid = 8350;
-    public static final double kElevatorLow = 2000;
-    public static final double kElevatorDropper = 4000;
-
-    public static final double kElevatorNeutral = 7800;
-
-    public static final double kElevatorNoteUp = 7461;
-    public static final double kElevatorNoteDown = 5800;
   }
 
   public static class ArmPivotConstants {

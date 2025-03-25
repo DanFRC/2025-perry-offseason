@@ -2,16 +2,16 @@ package frc.robot.Commands.Elevator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.Elevator.ElevatorSubsystem;
+import frc.robot.Subsystems.superstructure.elevator.ElevatorSubsystem;
 
-public class a_setElevatorPos extends Command {
+public class SetElevator extends Command {
 
   private final ElevatorSubsystem _elevator;
   private double point;
 
   private boolean finished = false;
 
-  public a_setElevatorPos(ElevatorSubsystem elevatorObject, double Givenpoint) {
+  public SetElevator(ElevatorSubsystem elevatorObject, double Givenpoint) {
     _elevator = elevatorObject;
     point = Givenpoint;
   }
