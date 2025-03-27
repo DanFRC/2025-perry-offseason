@@ -26,7 +26,7 @@ public class ElevatorSubsystem extends SubsystemBase {
   private double kL2Threash = ElevatorConstants.kL2 - 2000;
 
   // Control Systems
-  TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(15000, 14000));
+  TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(24500, 34500));
   TrapezoidProfile.State _setpoint = new TrapezoidProfile.State();
   TrapezoidProfile.State _goal = new TrapezoidProfile.State();
 

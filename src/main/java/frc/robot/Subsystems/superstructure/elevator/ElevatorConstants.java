@@ -1,7 +1,7 @@
 package frc.robot.Subsystems.superstructure.elevator;
 
 public class ElevatorConstants {
-    public static final int kElevatorMotorPort = 4;
+    public static final int kElevatorMotorPort = 2;
     public static final int kLimitSwitchPort = 0;
     public static final int kENC_A = 8;
     public static final int kENC_B = 9;
@@ -12,8 +12,8 @@ public class ElevatorConstants {
 
     public static double kDt = 0.02;
     public static double ks = 0.00001;
-    public static double kg = 0.09;
-    public static double kv = 0.00003;
+    public static double kg = 0.175;
+    public static double kv = 0.0000725;
     public static double ka = 0.0000001;
 
     public static final double kElevatorDeadZoneMax = 16050;

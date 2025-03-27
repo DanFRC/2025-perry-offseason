@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Commands.Elevator.SetElevator;
+import frc.robot.Subsystems.superstructure.arm.Arm;
 import frc.robot.Subsystems.superstructure.elevator.ElevatorSubsystem;
 
 public class RobotContainer {
@@ -22,6 +23,7 @@ public class RobotContainer {
   // Systems
   //private final DrivebaseSubsystem drivebaseSubsystem = new DrivebaseSubsystem();
   private final ElevatorSubsystem elevatorSubsystem = new ElevatorSubsystem();
+  private final Arm armSubsystem = new Arm();
 
   private final CommandXboxController _operator = new CommandXboxController(0);
 
