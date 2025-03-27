@@ -1,17 +1,18 @@
-package frc.robot.Commands.Elevator;
+package frc.robot.Commands.superstructure.elevator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.superstructure.elevator.ElevatorSubsystem;
+import frc.robot.Subsystems.superstructure.elevator.Elevator;
+import frc.robot.Subsystems.superstructure.elevator.ElevatorConstants;
 
 public class SetElevator extends Command {
 
-  private final ElevatorSubsystem _elevator;
+  private final Elevator _elevator;
   private double point;
 
   private boolean finished = false;
 
-  public SetElevator(ElevatorSubsystem elevatorObject, double Givenpoint) {
+  public SetElevator(Elevator elevatorObject, double Givenpoint) {
     _elevator = elevatorObject;
     point = Givenpoint;
   }
@@ -26,17 +27,17 @@ public class SetElevator extends Command {
     double setpoint = 0;
     SmartDashboard.putNumber("Commanded Point", point);
     if (point == 0) { // Neutral
-      setpoint = ElevatorConstants.kElevatorNeutral;
+      setpoint = ElevatorConstants.kNeutral;
     } else if (point == 4) { // L4
-      setpoint = ElevatorConstants.kElevatorDeadZoneMax;
+      setpoint = ElevatorConstants.kL4;
     } else if (point == 3) { // L3
-      setpoint = ElevatorConstants.kElevatorMid;
+      setpoint = ElevatorConstants.kL3;
     } else if (point == 2) { // L2
-      setpoint = ElevatorConstants.kElevatorLow;
+      setpoint = ElevatorConstants.kL2;
     } else if (point == 5) { // Algae
-      setpoint = ElevatorConstants.kElevatorMid;
+      setpoint = ElevatorConstants.kL3;
     } else {
-      setpoint = ElevatorConstants.kElevatorNeutral;
+      setpoint = ElevatorConstants.kNeutral;
     }
     SmartDashboard.putNumber("Commanded Setpoint", setpoint);
     _elevator.setSetpoint(setpoint);

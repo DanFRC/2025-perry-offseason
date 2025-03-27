@@ -6,14 +6,14 @@ public class ElevatorConstants {
     public static final int kENC_A = 8;
     public static final int kENC_B = 9;
 
-    public static double kP = 0.0005;
-    public static double kI = 0.0005;
-    public static double kD = 0.0002;
+    public static double kP = 0.00035;
+    public static double kI = 0.0;
+    public static double kD = 0.0001;
 
     public static double kDt = 0.02;
     public static double ks = 0.00001;
     public static double kg = 0.175;
-    public static double kv = 0.0000725;
+    public static double kv = 0.000075;
     public static double ka = 0.0000001;
 
     public static final double kElevatorDeadZoneMax = 16050;

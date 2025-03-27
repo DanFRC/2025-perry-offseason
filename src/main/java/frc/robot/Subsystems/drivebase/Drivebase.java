@@ -71,17 +71,16 @@ public class Drivebase extends SubsystemBase {
     }
 
     public void zeroGyro() {
-        // Reset Gyro for field orentation
         gyro.reset();
     }
 
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Yaw", gyro.getYaw());
+        SmartDashboard.putString("Reef Side", side);
     }
 
     @Override
     public void simulationPeriodic() {
-        // Periodic during Simulation
     }
 }

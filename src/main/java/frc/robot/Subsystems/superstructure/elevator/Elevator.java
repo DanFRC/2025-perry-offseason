@@ -5,13 +5,14 @@ package frc.robot.Subsystems.superstructure.elevator;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ElevatorSubsystem extends SubsystemBase {
+public class Elevator extends SubsystemBase {
   // Hardware
   private VictorSPX _motor1 = new VictorSPX(ElevatorConstants.kElevatorMotorPort);
   private Encoder encoder = new Encoder(ElevatorConstants.kENC_A, ElevatorConstants.kENC_B);
@@ -26,9 +27,15 @@ public class ElevatorSubsystem extends SubsystemBase {
   private double kL2Threash = ElevatorConstants.kL2 - 2000;
 
   // Control Systems
-  TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(24500, 34500));
+  TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(16000, 41000));
   TrapezoidProfile.State _setpoint = new TrapezoidProfile.State();
   TrapezoidProfile.State _goal = new TrapezoidProfile.State();
+
+  PIDController pid = new PIDController(
+    ElevatorConstants.kP,
+    ElevatorConstants.kI,
+    ElevatorConstants.kD
+  );
 
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(
     ks,
@@ -44,9 +51,10 @@ public class ElevatorSubsystem extends SubsystemBase {
 
   public void init() {
     encoder.reset();
+    pid.reset();
   }
 
-  public ElevatorSubsystem() {
+  public Elevator() {
     _motor1.enableVoltageCompensation(true);
     DataLogManager.start();
   }
