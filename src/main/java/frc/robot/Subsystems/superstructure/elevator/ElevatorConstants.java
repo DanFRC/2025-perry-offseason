@@ -13,7 +13,7 @@ public class ElevatorConstants {
     public static double kDt = 0.02;
     public static double ks = 0.225;
     public static double kg = 0.11;
-    public static double kv = 0.00003;
+    public static double kv = 0.000035;
     public static double ka = 0.00002;
 
     public static final double kElevatorDeadZoneMax = 16050;
