@@ -20,8 +20,8 @@ public class ArmConstants {
     public static double kD = 0.89;
 
     public static double kDt = 0.02;
-    public static double ks = 0.001;
-    public static double kg = 0.175;
-    public static double kv = 0.7;
-    public static double ka = 0.02;
+    public static double ks = 0.0;
+    public static double kg = -0.19;
+    public static double kv = 0.4;
+    public static double ka = 0.06;
 }

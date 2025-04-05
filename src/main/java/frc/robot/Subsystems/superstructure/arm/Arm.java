@@ -63,7 +63,7 @@ public class Arm extends SubsystemBase {
           _goal
         );
 
-        _motor1.set(ControlMode.PercentOutput, feedforwardOutput);
+        //_motor1.set(ControlMode.PercentOutput, feedforwardOutput);
 
         // Compare in Advantage Scope
         SmartDashboard.putNumber("encoder Arm", encoder.get());

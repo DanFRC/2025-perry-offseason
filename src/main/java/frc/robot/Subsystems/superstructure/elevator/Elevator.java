@@ -27,7 +27,7 @@ public class Elevator extends SubsystemBase {
   private double kL2Threash = ElevatorConstants.kL2 - 2000;
 
   // Control Systems
-  TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(16000, 41000));
+  TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(16000, 9000));
   TrapezoidProfile.State _setpoint = new TrapezoidProfile.State();
   TrapezoidProfile.State _goal = new TrapezoidProfile.State();
 
@@ -67,8 +67,14 @@ public class Elevator extends SubsystemBase {
       _setpoint, 
       _goal
     );
+
+    if (encoder.get() > ElevatorConstants.kNeutral) {
+      feedforward.setKg(ElevatorConstants.kg + 0.0097);
+    } else {
+      feedforward.setKg(ElevatorConstants.kg);
+    }
     
-    _motor1.set(ControlMode.PercentOutput, feedforwardOutput);
+    _motor1.set(ControlMode.PercentOutput, -feedforwardOutput + -pid.calculate(encoder.get(), _setpoint.position));
 
     if (encoder.get() >= kL4Threash) {
       state = "l4";
