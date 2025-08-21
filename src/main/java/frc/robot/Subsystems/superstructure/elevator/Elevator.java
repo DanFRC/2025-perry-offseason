@@ -75,15 +75,6 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
 
-    if (runner == 0) {
-      _motor1.set(ControlMode.PercentOutput, -pid.calculate(encoder.get(), point));
-    } else if (runner == 1) {
-      _motor1.set(ControlMode.PercentOutput, 0.65);
-    } else {
-      _motor1.set(ControlMode.PercentOutput, 0);
-    }
-    
-
     if (encoder.get() >= kL4Threash) {
       state = "l4";
     } else if (encoder.get() < kL4Threash && encoder.get() >= kL3Threash) {
@@ -93,6 +84,17 @@ public class Elevator extends SubsystemBase {
     } else if (encoder.get() < kL2Threash) {
       state = "whysolow";
     }
+
+    if (runner == 0) {
+      _motor1.set(ControlMode.PercentOutput, -pid.calculate(encoder.get(), point));
+    } else if (runner == 1) {
+      _motor1.set(ControlMode.PercentOutput, 0.65);
+    } else {
+      _motor1.set(ControlMode.PercentOutput, 0);
+    }
+    
+
+
 
     // Comparable in AdvantageScope
     SmartDashboard.putNumber("Profile Position", _setpoint.position);

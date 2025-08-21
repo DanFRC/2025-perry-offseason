@@ -20,7 +20,7 @@ public class ElevatorConstants {
     public static final double kElevatorDeadZoneMin = 10;
 
     public static final double kL4 = kElevatorDeadZoneMax;
-    public static final double kL3 = 8350;
+    public static final double kL3 = 7850;
     public static final double kL2 = 2000;
     public static final double kL1 = 4000;
 
