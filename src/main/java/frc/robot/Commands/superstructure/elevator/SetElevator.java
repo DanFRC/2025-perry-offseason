@@ -15,10 +15,13 @@ public class SetElevator extends Command {
   public SetElevator(Elevator elevatorObject, double Givenpoint) {
     _elevator = elevatorObject;
     point = Givenpoint;
+
+    addRequirements(_elevator);
   }
 
   @Override
   public void initialize() {
+    _elevator.runabit(false);
     setElevatorPoint(point);
     finished = false;
   }
@@ -36,6 +39,9 @@ public class SetElevator extends Command {
       setpoint = ElevatorConstants.kL2;
     } else if (point == 5) { // Algae
       setpoint = ElevatorConstants.kL3;
+    }
+    else if (point == 6) { // Intak2
+      setpoint = 7350;
     } else {
       setpoint = ElevatorConstants.kNeutral;
     }

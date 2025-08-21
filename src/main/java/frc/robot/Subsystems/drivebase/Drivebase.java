@@ -39,6 +39,7 @@ public class Drivebase extends SubsystemBase {
   }
 
   public Drivebase() {
+    gyro.reset();
     // Invert the right side motors.
     frontRight.setInverted(true);
     rearRight.setInverted(true);

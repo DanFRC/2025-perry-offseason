@@ -37,6 +37,8 @@ public class Elevator extends SubsystemBase {
     ElevatorConstants.kD
   );
 
+  double point = 0;
+
   private ElevatorFeedforward feedforward = new ElevatorFeedforward(
     ks,
     kg,
@@ -46,11 +48,12 @@ public class Elevator extends SubsystemBase {
 
   // Funcs
   public void setSetpoint(double returnedPoint) {
-    _goal = new TrapezoidProfile.State(returnedPoint, 0);
+    point = returnedPoint;
   }
 
   public void init() {
     encoder.reset();
+    point = encoder.get();
     pid.reset();
   }
 
@@ -59,16 +62,27 @@ public class Elevator extends SubsystemBase {
     DataLogManager.start();
   }
 
+  double runner = 0;
+
+  public void runabit(boolean timmy) {
+    if (timmy == true) {
+      runner = 1;
+    } else {
+      runner = 0;
+    }
+  }
+
   @Override
   public void periodic() {
-    double feedforwardOutput = feedforward.calculate(_setpoint.velocity);
-    _setpoint = profile.calculate(
-      kDt, 
-      _setpoint, 
-      _goal
-    );
+
+    if (runner == 0) {
+      _motor1.set(ControlMode.PercentOutput, -pid.calculate(encoder.get(), point));
+    } else if (runner == 1) {
+      _motor1.set(ControlMode.PercentOutput, 0.65);
+    } else {
+      _motor1.set(ControlMode.PercentOutput, 0);
+    }
     
-    _motor1.set(ControlMode.PercentOutput, feedforwardOutput);
 
     if (encoder.get() >= kL4Threash) {
       state = "l4";
@@ -83,8 +97,10 @@ public class Elevator extends SubsystemBase {
     // Comparable in AdvantageScope
     SmartDashboard.putNumber("Profile Position", _setpoint.position);
     SmartDashboard.putNumber("Elevator Position", encoder.get());
-    SmartDashboard.putNumber("FeedForward Output", feedforwardOutput);
+    SmartDashboard.putNumber("FeedForward Output", 0);
     SmartDashboard.putString("ElevatorState", state);
+    SmartDashboard.putNumber("encoder rah", encoder.get());
+    SmartDashboard.putNumber("PID PID GOG", pid.calculate(point));
   }
 
   @Override

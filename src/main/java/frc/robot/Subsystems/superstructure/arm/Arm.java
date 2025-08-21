@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,6 +16,7 @@ public class Arm extends SubsystemBase {
     // Hardware
     private final VictorSPX _motor1 = new VictorSPX(ArmConstants.kArmPivotMotorPort);
     private final DutyCycleEncoder encoder = new DutyCycleEncoder(ArmConstants.kEncoderPort);
+    private final SlewRateLimiter limiter = new SlewRateLimiter(.5);
 
     // Control Systems
     TrapezoidProfile profile = new TrapezoidProfile(new TrapezoidProfile.Constraints(1, 2));
@@ -37,11 +39,12 @@ public class Arm extends SubsystemBase {
 
     public Arm() {
         _motor1.enableVoltageCompensation(true);
+        pid.setIZone(.4);
     }
-
+    double pointi = 0;
     // Funcs
     public void setSetpoint(double returnedPoint) {
-        _goal = new TrapezoidProfile.State(returnedPoint, 0);
+        pointi = returnedPoint;
     }
 
     public static double convertToRadians(double input) {
@@ -54,21 +57,33 @@ public class Arm extends SubsystemBase {
         pid.reset();
     }
 
+    double runner = 0;
+
+    public void runabit(boolean timmy) {
+      if (timmy == true) {
+        runner = 1;
+      } else {
+        runner = 0;
+      }
+    }
+
     @Override
     public void periodic() {
-        double feedforwardOutput = feedforward.calculate(convertToRadians(encoder.get()),_setpoint.velocity);
-        _setpoint = profile.calculate(
-          ArmConstants.kDt, 
-          _setpoint, 
-          _goal
-        );
 
-        _motor1.set(ControlMode.PercentOutput, feedforwardOutput);
+        if (runner == 1) {
+            _motor1.set(ControlMode.PercentOutput, 0.5);
+        } else if (runner == 0) {
+            _motor1.set(ControlMode.PercentOutput, pid.calculate(encoder.get(), pointi));
+        } else {
+            _motor1.set(ControlMode.PercentOutput, 0);
+        }
 
+        
         // Compare in Advantage Scope
-        SmartDashboard.putNumber("encoder Arm", encoder.get());
-        SmartDashboard.putNumber("Arm Feed Forward OUtput", feedforwardOutput);
+        SmartDashboard.putNumber("encoder Arm tist tist tist", encoder.get());
+        SmartDashboard.putNumber("Arm Feed Forward OUtput", 0);
         SmartDashboard.putNumber("Arm Profile", _setpoint.position);
+        SmartDashboard.putNumber("pos", pid.calculate(pointi));
     }
 
     @Override

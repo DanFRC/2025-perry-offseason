@@ -6,9 +6,9 @@ public class ElevatorConstants {
     public static final int kENC_A = 8;
     public static final int kENC_B = 9;
 
-    public static double kP = 0.00035;
-    public static double kI = 0.0;
-    public static double kD = 0.0001;
+    public static double kP = 0.00018;
+    public static double kI = 0.00004;
+    public static double kD = 0.0;
 
     public static double kDt = 0.02;
     public static double ks = 0.00001;
@@ -24,7 +24,7 @@ public class ElevatorConstants {
     public static final double kL2 = 2000;
     public static final double kL1 = 4000;
 
-    public static final double kNeutral = 7800;
+    public static final double kNeutral = 7850;
 
     public static final double kCoralUp = 7461;
     public static final double kCoralDown = 5800;

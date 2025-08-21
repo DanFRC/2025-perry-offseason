@@ -12,15 +12,19 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Commands.superstructure.arm.SetArm;
+import frc.robot.Commands.superstructure.arm.DriveArmaBit;
+import frc.robot.Commands.superstructure.elevator.DriveaTad;
 import frc.robot.Commands.superstructure.elevator.SetElevator;
 import frc.robot.Subsystems.drivebase.Drivebase;
 import frc.robot.Subsystems.superstructure.arm.Arm;
 import frc.robot.Subsystems.superstructure.elevator.Elevator;
+import frc.robot.Commands.superstructure.arm.Driver;
+import frc.robot.Commands.superstructure.arm.SetArm;
 
 public class RobotContainer {
   public RobotContainer() {
     configureBindings();
+    drivebaseSubsystem.setDefaultCommand(new Driver(drivebaseSubsystem, _operator));
   }
   
   // Systems
@@ -33,6 +37,7 @@ public class RobotContainer {
   private void configureBindings() {
 
     //Subsystem Inits
+    
 
     // non FMS Init
     Trigger noFMSTrigger = new Trigger(() -> RobotState.isEnabled() && RobotState.isTeleop() && !DriverStation.isFMSAttached());
@@ -41,6 +46,7 @@ public class RobotContainer {
         () -> {
           elevatorSubsystem.init();
           armSubsystem.init();
+          drivebaseSubsystem.zeroGyro();
         }
       )
     ));
@@ -71,7 +77,7 @@ public class RobotContainer {
     new SetElevator(elevatorSubsystem, 2),
     new SetArm(armSubsystem, 2)
     ));
-    // Neutral
+    // Intk
     _operator.b().whileTrue(new ParallelCommandGroup(
       new SetElevator(elevatorSubsystem, 0),
       new SetArm(armSubsystem, 0)
@@ -81,17 +87,21 @@ public class RobotContainer {
       new SetElevator(elevatorSubsystem, 5),
       new SetArm(armSubsystem, 5)
     ));
+        //int2
+    _operator.povRight().whileTrue(new ParallelCommandGroup(
+        new DriveaTad(elevatorSubsystem)
+    ));
+    //int3
+    _operator.povUp().onTrue(new ParallelCommandGroup(
+      new SetElevator(elevatorSubsystem, 3),
+      new SetArm(armSubsystem, 4)
+    ));
 
-    // Set Side
-    _operator.rightBumper().whileTrue(new ParallelCommandGroup(
-      Commands.run(() -> {
-        if (_operator.getLeftX() > 0.5) {
-          drivebaseSubsystem.setReefSide("right");
-        } else if (_operator.getLeftX() < -0.5) {
-          drivebaseSubsystem.setReefSide("left");
-        }
-      }
-    )));
+    _operator.rightTrigger().whileTrue(new ParallelCommandGroup(
+      new DriveArmaBit(armSubsystem)
+    ));
+
+        //Score
 
   }
 
